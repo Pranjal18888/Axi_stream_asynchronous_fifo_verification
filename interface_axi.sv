@@ -27,28 +27,28 @@ interface axis_if (
     (s_tvalid && !s_tready) |=> s_tvalid;
   endproperty
   a_s_tvalid_stable: assert property (p_s_tvalid_stable)
-    else $error("[AXIS_ASSERT] S_TVALID, S_TREADY se pehle hi deassert ho gaya");
+    else $error("[AXIS_ASSERT] S_TVALID, S_TREADY");
 
   property p_s_tdata_stable;
     @(posedge s_aclk) disable iff (!s_aresetn)
     (s_tvalid && !s_tready) |=> $stable(s_tdata);
   endproperty
   a_s_tdata_stable: assert property (p_s_tdata_stable)
-    else $error("[AXIS_ASSERT] S_TDATA wait ke dauran change ho gaya");
+    else $error("[AXIS_ASSERT] S_TDATA wait");
 
   property p_s_tlast_stable;
     @(posedge s_aclk) disable iff (!s_aresetn)
     (s_tvalid && !s_tready) |=> $stable(s_tlast);
   endproperty
   a_s_tlast_stable: assert property (p_s_tlast_stable)
-    else $error("[AXIS_ASSERT] S_TLAST wait ke dauran change ho gaya");
+    else $error("[AXIS_ASSERT] S_TLAST wait");
 
   property p_reset_tvalid_low;
     @(posedge s_aclk)
     $rose(s_aresetn) |-> !s_tvalid;
   endproperty
   a_reset_tvalid_low: assert property (p_reset_tvalid_low)
-    else $error("[AXIS_ASSERT] Reset ke baad S_TVALID high hai");
+    else $error("[AXIS_ASSERT] Reset after  S_TVALID high");
 
   //-------------------------------------------------------------
   // SVA Assertions - read domain (m_aclk)
@@ -58,13 +58,13 @@ interface axis_if (
     (m_tvalid && !m_tready) |=> m_tvalid;
   endproperty
   a_m_tvalid_stable: assert property (p_m_tvalid_stable)
-    else $error("[AXIS_ASSERT] M_TVALID, M_TREADY se pehle hi deassert ho gaya (DUT bug)");
+    else $error("[AXIS_ASSERT] M_TVALID, M_TREADY (DUT bug)");
 
   property p_m_tdata_stable;
     @(posedge m_aclk) disable iff (!m_aresetn)
     (m_tvalid && !m_tready) |=> $stable(m_tdata);
   endproperty
   a_m_tdata_stable: assert property (p_m_tdata_stable)
-    else $error("[AXIS_ASSERT] M_TDATA wait ke dauran change ho gaya (DUT bug)");
+    else $error("[AXIS_ASSERT] M_TDATA wait (DUT bug)");
 
 endinterface : axis_if
